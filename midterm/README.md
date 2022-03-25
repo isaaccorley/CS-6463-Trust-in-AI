@@ -17,3 +17,7 @@ bash download.sh
 ```bash
 bash train.sh
 ```
+
+### Model Checkpoints
+
+Checkpoints can be downloaded at the following [link](https://drive.google.com/file/d/1r-kwlRQgMTB2EMkLye8rsF2iJEm-3jAa/view?usp=sharing)
