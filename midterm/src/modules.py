@@ -20,14 +20,7 @@ class RESISC45DataModule(torchgeo.datamodules.RESISC45DataModule):
         return sample
 
     def setup(self, stage: Optional[str] = None) -> None:
-        """Initialize the main ``Dataset`` objects.
-        This method is called once per GPU per run.
-        Args:
-            stage: stage to set up
-        """
-
         transforms = T.Compose([self.preprocess, self.resize])
-
         self.train_dataset = RESISC45(self.root_dir, "train", transforms=transforms)
         self.val_dataset = RESISC45(self.root_dir, "val", transforms=transforms)
         self.test_dataset = RESISC45(self.root_dir, "test", transforms=transforms)
