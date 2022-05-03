@@ -5,7 +5,7 @@ from torchmetrics import Accuracy, FBetaScore, MetricCollection
 from torchgeo import trainers
 
 
-class RESISC45MultiLabelClassificationTask(trainers.MultiLabelClassificationTask):
+class CustomMultiLabelClassificationTask(trainers.MultiLabelClassificationTask):
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.save_hyperparameters()

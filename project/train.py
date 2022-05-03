@@ -21,7 +21,6 @@ from torchgeo.datamodules import (
     COWCCountingDataModule,
     CycloneDataModule,
     ETCI2021DataModule,
-    EuroSATDataModule,
     LandCoverAIDataModule,
     NAIPChesapeakeDataModule,
     OSCDDataModule,
@@ -37,8 +36,8 @@ from torchgeo.trainers import (
     SemanticSegmentationTask,
 )
 
-from src.modules import RESISC45MultiLabelClassificationTask
-from src.datamodules import RESISC45DataModule
+from src.modules import CustomMultiLabelClassificationTask
+from src.datamodules import RESISC45DataModule, EuroSATDataModule
 
 
 TASK_TO_MODULES_MAPPING: Dict[
@@ -49,13 +48,14 @@ TASK_TO_MODULES_MAPPING: Dict[
     "chesapeake_cvpr": (SemanticSegmentationTask, ChesapeakeCVPRDataModule),
     "cowc_counting": (RegressionTask, COWCCountingDataModule),
     "cyclone": (RegressionTask, CycloneDataModule),
-    "eurosat": (ClassificationTask, EuroSATDataModule),
+    "eurosat": (ClassificationTask, EuroSATDataModule),  # modified this line
+    "eurosat-robust": (CustomMultiLabelClassificationTask, EuroSATDataModule),  # modified this line
     "etci2021": (SemanticSegmentationTask, ETCI2021DataModule),
     "landcoverai": (SemanticSegmentationTask, LandCoverAIDataModule),
     "naipchesapeake": (SemanticSegmentationTask, NAIPChesapeakeDataModule),
     "oscd": (SemanticSegmentationTask, OSCDDataModule),
     "resisc45": (ClassificationTask, RESISC45DataModule),  # modified this line
-    "resisc45-robust": (RESISC45MultiLabelClassificationTask, RESISC45DataModule),
+    "resisc45-robust": (CustomMultiLabelClassificationTask, RESISC45DataModule),  # modified this line
     "sen12ms": (SemanticSegmentationTask, SEN12MSDataModule),
     "so2sat": (ClassificationTask, So2SatDataModule),
     "ucmerced": (ClassificationTask, UCMercedDataModule),
