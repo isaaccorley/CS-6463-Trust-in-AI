@@ -14,31 +14,18 @@ import pytorch_lightning as pl
 from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning import loggers as pl_loggers
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
-
-from torchgeo.datamodules import (
-    BigEarthNetDataModule,
-    ChesapeakeCVPRDataModule,
-    COWCCountingDataModule,
-    CycloneDataModule,
-    ETCI2021DataModule,
-    EuroSATDataModule,
-    LandCoverAIDataModule,
-    NAIPChesapeakeDataModule,
-    OSCDDataModule,
-    SEN12MSDataModule,
-    So2SatDataModule,
-    UCMercedDataModule,
-)
-from torchgeo.trainers import (
-    BYOLTask,
-    ClassificationTask,
-    MultiLabelClassificationTask,
-    RegressionTask,
-    SemanticSegmentationTask,
-)
-
 from src.modules import RESISC45ClassificationTask, RESISC45DataModule
-
+from torchgeo.datamodules import (BigEarthNetDataModule,
+                                  ChesapeakeCVPRDataModule,
+                                  COWCCountingDataModule, CycloneDataModule,
+                                  ETCI2021DataModule, EuroSATDataModule,
+                                  LandCoverAIDataModule,
+                                  NAIPChesapeakeDataModule, OSCDDataModule,
+                                  SEN12MSDataModule, So2SatDataModule,
+                                  UCMercedDataModule)
+from torchgeo.trainers import (BYOLTask, ClassificationTask,
+                               MultiLabelClassificationTask, RegressionTask,
+                               SemanticSegmentationTask)
 
 TASK_TO_MODULES_MAPPING: Dict[
     str, Tuple[Type[pl.LightningModule], Type[pl.LightningDataModule]]

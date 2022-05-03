@@ -1,10 +1,10 @@
 from typing import Optional
 
+import torch.nn as nn
+import torchgeo.datamodules
+import torchgeo.trainers
 import torchvision
 import torchvision.transforms as T
-import torch.nn as nn
-import torchgeo.trainers
-import torchgeo.datamodules
 from torchgeo.datasets import RESISC45
 
 
@@ -37,10 +37,14 @@ class RESISC45ClassificationTask(torchgeo.trainers.ClassificationTask):
             self.model.fc = nn.Linear(self.model.fc.in_features, num_classes)
         elif "vit" in classification_model:
             self.model = torchvision.models.vit_b_16(pretrained=True)
-            self.model.heads.head = nn.Linear(self.model.heads.head.in_features, num_classes)
+            self.model.heads.head = nn.Linear(
+                self.model.heads.head.in_features, num_classes
+            )
         elif "convnext" in classification_model:
             self.model = torchvision.models.convnext_base(pretrained=True)
-            self.model.classifier[2] = nn.Linear(self.model.classifier[2].in_features, num_classes)
+            self.model.classifier[2] = nn.Linear(
+                self.model.classifier[2].in_features, num_classes
+            )
         else:
             raise ValueError(
                 f"Model type '{classification_model}' is not a valid model."

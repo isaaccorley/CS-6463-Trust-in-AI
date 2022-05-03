@@ -1,21 +1,22 @@
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
+import kornia.augmentation as K
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as T
-import kornia.augmentation as K
-import matplotlib.pyplot as plt
-from torchgeo.datasets import RESISC45, EuroSAT
 from torchgeo import datamodules
+from torchgeo.datasets import RESISC45, EuroSAT
 
 
 class CutMix(nn.Module):
     """Wrapper around kornia.augmentation.RandomCutMix to postprocess labels to onehot"""
+
     def __init__(self, num_classes, *args, **kwargs):
         super().__init__()
         self.num_classes = num_classes
-        kwargs["num_mix"] = 1 # only supports mixups=1 for now
+        kwargs["num_mix"] = 1  # only supports mixups=1 for now
         self.transform = K.RandomCutMix(*args, **kwargs)
 
     @staticmethod
@@ -51,9 +52,7 @@ class RESISC45DataModule(datamodules.RESISC45DataModule):
             K.RandomVerticalFlip(p=0.5),
             K.RandomSharpness(p=0.5),
             K.RandomErasing(p=0.1),
-            K.ColorJitter(
-                p=0.5, brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1
-            ),
+            K.ColorJitter(p=0.5, brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1),
             data_keys=["input"],
         )
         if "cutmix" in kwargs:
@@ -104,10 +103,9 @@ class RESISC45DataModule(datamodules.RESISC45DataModule):
         return plt.figure()
 
 
-
 class EuroSATDataModule(datamodules.EuroSATDataModule):
 
-    #resize_transform = T.Resize((224, 224), interpolation=T.InterpolationMode.BILINEAR)
+    # resize_transform = T.Resize((224, 224), interpolation=T.InterpolationMode.BILINEAR)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -117,9 +115,9 @@ class EuroSATDataModule(datamodules.EuroSATDataModule):
             K.RandomVerticalFlip(p=0.5),
             K.RandomSharpness(p=0.5),
             K.RandomErasing(p=0.1),
-            #K.ColorJitter(
+            # K.ColorJitter(
             #    p=0.5, brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1
-            #),
+            # ),
             data_keys=["input"],
         )
         if "cutmix" in kwargs:
@@ -131,7 +129,7 @@ class EuroSATDataModule(datamodules.EuroSATDataModule):
     def resize(self, sample):
         sample["image"] = sample["image"].float()
         sample["image"] = self.norm(sample["image"])
-        #sample["image"] = self.resize_transform(sample["image"])
+        # sample["image"] = self.resize_transform(sample["image"])
         return sample
 
     def on_after_batch_transfer(

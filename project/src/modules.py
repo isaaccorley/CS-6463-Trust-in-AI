@@ -1,8 +1,8 @@
 from typing import Any, Dict, cast
 
 import torch
-from torchmetrics import Accuracy, FBetaScore, MetricCollection
 from torchgeo import trainers
+from torchmetrics import Accuracy, FBetaScore, MetricCollection
 
 
 class CustomMultiLabelClassificationTask(trainers.MultiLabelClassificationTask):

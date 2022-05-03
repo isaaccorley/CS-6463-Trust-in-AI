@@ -13,32 +13,20 @@ from typing import Any, Dict, Tuple, Type, cast
 import pytorch_lightning as pl
 from omegaconf import DictConfig, OmegaConf
 from pytorch_lightning import loggers as pl_loggers
-from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint, StochasticWeightAveraging
-
-from torchgeo.datamodules import (
-    BigEarthNetDataModule,
-    ChesapeakeCVPRDataModule,
-    COWCCountingDataModule,
-    CycloneDataModule,
-    ETCI2021DataModule,
-    LandCoverAIDataModule,
-    NAIPChesapeakeDataModule,
-    OSCDDataModule,
-    SEN12MSDataModule,
-    So2SatDataModule,
-    UCMercedDataModule,
-)
-from torchgeo.trainers import (
-    BYOLTask,
-    ClassificationTask,
-    MultiLabelClassificationTask,
-    RegressionTask,
-    SemanticSegmentationTask,
-)
-
+from pytorch_lightning.callbacks import (EarlyStopping, ModelCheckpoint,
+                                         StochasticWeightAveraging)
+from src.datamodules import EuroSATDataModule, RESISC45DataModule
 from src.modules import CustomMultiLabelClassificationTask
-from src.datamodules import RESISC45DataModule, EuroSATDataModule
-
+from torchgeo.datamodules import (BigEarthNetDataModule,
+                                  ChesapeakeCVPRDataModule,
+                                  COWCCountingDataModule, CycloneDataModule,
+                                  ETCI2021DataModule, LandCoverAIDataModule,
+                                  NAIPChesapeakeDataModule, OSCDDataModule,
+                                  SEN12MSDataModule, So2SatDataModule,
+                                  UCMercedDataModule)
+from torchgeo.trainers import (BYOLTask, ClassificationTask,
+                               MultiLabelClassificationTask, RegressionTask,
+                               SemanticSegmentationTask)
 
 TASK_TO_MODULES_MAPPING: Dict[
     str, Tuple[Type[pl.LightningModule], Type[pl.LightningDataModule]]
@@ -49,13 +37,19 @@ TASK_TO_MODULES_MAPPING: Dict[
     "cowc_counting": (RegressionTask, COWCCountingDataModule),
     "cyclone": (RegressionTask, CycloneDataModule),
     "eurosat": (ClassificationTask, EuroSATDataModule),  # modified this line
-    "eurosat-robust": (CustomMultiLabelClassificationTask, EuroSATDataModule),  # modified this line
+    "eurosat-robust": (
+        CustomMultiLabelClassificationTask,
+        EuroSATDataModule,
+    ),  # modified this line
     "etci2021": (SemanticSegmentationTask, ETCI2021DataModule),
     "landcoverai": (SemanticSegmentationTask, LandCoverAIDataModule),
     "naipchesapeake": (SemanticSegmentationTask, NAIPChesapeakeDataModule),
     "oscd": (SemanticSegmentationTask, OSCDDataModule),
     "resisc45": (ClassificationTask, RESISC45DataModule),  # modified this line
-    "resisc45-robust": (CustomMultiLabelClassificationTask, RESISC45DataModule),  # modified this line
+    "resisc45-robust": (
+        CustomMultiLabelClassificationTask,
+        RESISC45DataModule,
+    ),  # modified this line
     "sen12ms": (SemanticSegmentationTask, SEN12MSDataModule),
     "so2sat": (ClassificationTask, So2SatDataModule),
     "ucmerced": (ClassificationTask, UCMercedDataModule),
